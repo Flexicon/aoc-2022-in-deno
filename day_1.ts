@@ -1,6 +1,9 @@
-import { readInput } from "../util.ts";
+import { readInput } from "./util.ts";
 
-console.log("Day 1: Counting Calories\n");
+const day = 1;
+const theme = "Counting Calories";
+
+console.log(`Day ${day}: ${theme}\n`);
 
 function part1(input: string): number {
   return sumTop(input, 1);
@@ -19,7 +22,7 @@ function sumTop(input: string, top: number): number {
     .reduce((sum, value) => sum + value, 0);
 }
 
-const input = readInput();
+const input = readInput(`day_${day}_input`);
 
 console.log("Part 1:", part1(input));
 console.log("Part 2:", part2(input));

@@ -1,3 +1,3 @@
-export function readInput(): string {
-  return Deno.readTextFileSync("./input.txt");
+export function readInput(file: string): string {
+  return Deno.readTextFileSync(`./${file}.txt`);
 }
