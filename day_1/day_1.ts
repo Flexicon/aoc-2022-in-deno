@@ -1,8 +1,6 @@
-console.log("Day 1: Counting Calories\n");
+import { readInput } from "../util.ts";
 
-function readInput(): string {
-  return Deno.readTextFileSync("./input.txt");
-}
+console.log("Day 1: Counting Calories\n");
 
 function part1(input: string): number {
   return sumTop(input, 1);
