@@ -1,32 +1,27 @@
 console.log("Day 1: Counting Calories\n");
 
-function findMaxAndIndex(input: number[]): [number, number] {
-  const max = Math.max(...input);
-  const index = input.indexOf(max) + 1;
-
-  return [max, index];
+function readInput(): string {
+  return Deno.readTextFileSync("./input.txt");
 }
 
-function findTopThree(input: number[]): [number, number, number] {
-  const sorted = [...input].sort((a, b) => a > b ? -1 : 1);
-  const [first = 0, second = 0, third = 0] = sorted;
-
-  return [first, second, third];
+function part1(input: string): number {
+  return sumTop(input, 1);
 }
 
-const text = await Deno.readTextFile("./input.txt");
-const elvesTexts = text.split("\n\n");
-const elvesItems = elvesTexts.map((t) => t.split("\n").map((cal) => +cal));
-const elvesSums = elvesItems.map((items) =>
-  items.reduce((sum, item) => sum + item, 0)
-);
+function part2(input: string): number {
+  return sumTop(input, 3);
+}
 
-const [maxCalories, elfWithMax] = findMaxAndIndex(elvesSums);
+function sumTop(input: string, top: number): number {
+  return input.split("\n\n")
+    .map((elf) => elf.split("\n").map((line) => parseInt(line)))
+    .map((lines) => lines.reduce((sum, line) => sum + line, 0))
+    .sort((a, b) => b - a)
+    .slice(0, top)
+    .reduce((sum, value) => sum + value, 0);
+}
 
-console.log("Highest amount of calories:", maxCalories);
-console.log(`Held by elf #${elfWithMax}\n`);
+const input = readInput();
 
-const [first, second, third] = findTopThree(elvesSums);
-
-console.log(`Top 3:\n  #1: ${first}\n  #2: ${second}\n  #3: ${third}`);
-console.log(`Sum: ${first + second + third}`);
+console.log("Part 1:", part1(input));
+console.log("Part 2:", part2(input));
