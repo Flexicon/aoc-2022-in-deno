@@ -2,7 +2,7 @@ import { assertEquals } from "https://deno.land/std@0.167.0/testing/asserts.ts";
 
 import { readInput } from "./util.ts";
 
-const day = 2;
+const day = "__DAY__";
 const theme = "TBD";
 
 console.log(`Day ${day}: ${theme}\n`);
