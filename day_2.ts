@@ -18,6 +18,12 @@ const shapeScores: { [key in Shape]: number } = {
   "C": 3,
 };
 
+const counters: { [key in Shape]: Shape } = {
+  "A": "C",
+  "B": "A",
+  "C": "B",
+};
+
 const counteredBy: { [key in Shape]: Shape } = {
   "A": "B",
   "B": "C",
@@ -33,28 +39,45 @@ function part1(input: string): number {
 
   return input.split("\n")
     .map((line) => line.split(" ") as [Shape, PlayerMove])
-    .reduce((sum, [opponentShape, playerMove]) => {
-      const playerShape = movesToShape[playerMove];
-
-      if (opponentShape === playerShape) {
-        sum += DRAW_POINTS;
-      } else if (counteredBy[opponentShape] === playerShape) {
-        sum += WIN_POINTS;
-      }
-
-      return sum + shapeScores[playerShape];
-    }, 0);
+    .map(([opponent, player]) => [opponent, movesToShape[player]])
+    .reduce(sumPoints, 0);
 }
 
-function part2(_input: string): number {
-  return 0;
+function part2(input: string): number {
+  return input.split("\n")
+    .map((line) => line.split(" ") as [Shape, PlayerMove])
+    .map(([opponent, player]) => {
+      const playerShape = ((move: PlayerMove, opponent: Shape) => {
+        switch (move) {
+          case "X":
+            return counters[opponent];
+          case "Y":
+            return opponent;
+          case "Z":
+            return counteredBy[opponent];
+        }
+      })(player, opponent);
+
+      return [opponent, playerShape];
+    })
+    .reduce(sumPoints, 0);
+}
+
+function sumPoints(sum: number, [opponent, player]: Shape[]): number {
+  if (opponent === player) {
+    sum += DRAW_POINTS;
+  } else if (counteredBy[opponent] === player) {
+    sum += WIN_POINTS;
+  }
+
+  return sum + shapeScores[player];
 }
 
 const input = readInput(`day_${day}_input`);
 const testInput = readInput(`day_${day}_test_input`);
 
 assertEquals(part1(testInput), 15);
-assertEquals(part2(testInput), 0);
+assertEquals(part2(testInput), 12);
 
 console.log("Part 1:", part1(input));
 console.log("Part 2:", part2(input));
