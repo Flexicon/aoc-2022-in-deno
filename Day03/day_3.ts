@@ -1,6 +1,6 @@
 import { assertEquals } from "https://deno.land/std@0.167.0/testing/asserts.ts";
 
-import { readInput } from "./util.ts";
+import { readInput } from "../util.ts";
 
 const day = 3;
 const theme = "Rucksack Reorganization";

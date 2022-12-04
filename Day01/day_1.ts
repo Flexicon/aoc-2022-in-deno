@@ -1,4 +1,4 @@
-import { readInput } from "./util.ts";
+import { readInput } from "../util.ts";
 
 const day = 1;
 const theme = "Counting Calories";
