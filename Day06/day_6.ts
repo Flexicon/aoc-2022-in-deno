@@ -7,7 +7,16 @@ const theme = "TBD";
 
 console.log(`Day ${day}: ${theme}\n`);
 
-function part1(_input: string): number {
+function part1(input: string): number {
+  const chars = input.split("");
+
+  for (let i = 4; i < chars.length; i++) {
+    const lastFourUnique = new Set(chars.slice(i - 4, i));
+    if (lastFourUnique.size === 4) {
+      return i;
+    }
+  }
+
   return 0;
 }
 
