@@ -7,12 +7,43 @@ const theme = "TBD";
 
 console.log(`Day ${day}: ${theme}\n`);
 
-function part1(_input: string): number {
-  return 0;
+function part1(input: string): number {
+  const instructions = input.split("\n");
+
+  const cycles: number[] = instructions
+    .map((line) => line.split(" "))
+    .reduce((cycles, [instruction, arg]) => {
+      const register = cycles.slice(-1)[0];
+
+      switch (instruction) {
+        case "addx":
+          cycles.push(register, register + (+arg));
+          break;
+
+        case "noop":
+        default:
+          cycles.push(register);
+          break;
+      }
+
+      return cycles;
+    }, [1]);
+
+  return measureSignalStrength(cycles);
 }
 
 function part2(_input: string): number {
   return 0;
+}
+
+function measureSignalStrength(cycles: number[]): number {
+  let sum = 0;
+  for (let i = 19; i < cycles.length; i += 40) {
+    const value = cycles[i];
+    sum += value * (i + 1);
+  }
+
+  return sum;
 }
 
 const input = readInput(`day_${day}_input`);
